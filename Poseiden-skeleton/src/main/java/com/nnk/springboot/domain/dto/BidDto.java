@@ -10,6 +10,8 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class BidDto {
 
+	// user interface functionality
+
 	private Integer id;
 
 	@NotBlank(message = "Account is mandatory")

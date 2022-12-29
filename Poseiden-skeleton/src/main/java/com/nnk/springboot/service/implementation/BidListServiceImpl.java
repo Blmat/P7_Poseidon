@@ -1,14 +1,16 @@
 package com.nnk.springboot.service.implementation;
 
 import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.domain.dto.BidDto;
 import com.nnk.springboot.exception.BidServiceException;
 import com.nnk.springboot.repositories.BidListRepository;
 import com.nnk.springboot.service.BidListService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -18,6 +20,9 @@ public class BidListServiceImpl implements BidListService {
 
     //UserStory2
     private final BidListRepository bidListRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
 
 
     /**
@@ -35,6 +40,11 @@ public class BidListServiceImpl implements BidListService {
             return true;
         }
         throw new BidServiceException("There was an error while creating the Bid");
+    }
+
+    @Override
+    public void validate(BidList bidList) {
+
     }
 
     /**
@@ -74,5 +84,13 @@ public class BidListServiceImpl implements BidListService {
             return true;
         }
         throw new BidServiceException("Could not find bid with id : " + id);
+    }
+
+    public BidList convertDtoToEntity(BidDto bidDto) {
+        return modelMapper.map(bidDto, BidList.class);
+    }
+
+    public BidDto convertEntityToDto(BidList bidEntity) {
+        return modelMapper.map(bidEntity, BidDto.class);
     }
 }

@@ -1,19 +1,17 @@
-package com.poseidon.app.domain;
+package com.nnk.springboot.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "rating")
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 public class Rating {
 
     public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
@@ -39,4 +37,17 @@ public class Rating {
 
     @Column
     private Integer orderNumber;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Rating rating = (Rating) o;
+        return id != null && Objects.equals(id, rating.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

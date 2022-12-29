@@ -1,24 +1,22 @@
-package com.poseidon.app.domain;
+package com.nnk.springboot.domain;
 
+import lombok.*;
+import org.hibernate.Hibernate;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Objects;
 
 @Entity
 @Table(name = "bid")
+@AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Bid {
+@Getter
+@Setter
+@ToString
+public class BidList {
 
-    public Bid(String account, String type, Double bidQuantity) {
+    public BidList(String account, String type, Double bidQuantity) {
         this.account = account;
         this.type = type;
         this.bidQuantity = bidQuantity;
@@ -42,10 +40,13 @@ public class Bid {
     private Double askQuantity;
 
     @Column
-    private Double bidDate;
+    private Double bid;
 
     @Column
     private Double ask;
+
+    @Column
+    private String benchmark;
 
     @Column
     private Timestamp bidListDate;
@@ -88,4 +89,17 @@ public class Bid {
 
     @Column
     private String side;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        BidList bidList = (BidList) o;
+        return id != null && Objects.equals(id, bidList.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

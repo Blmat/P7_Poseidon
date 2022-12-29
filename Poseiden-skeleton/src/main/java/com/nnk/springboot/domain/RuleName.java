@@ -1,23 +1,19 @@
-package com.poseidon.app.domain;
+package com.nnk.springboot.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "rule")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Rule {
+public class RuleName {
 
-    public Rule(String name, String description, String json, String template, String sqlStr, String sqlPart) {
+    public RuleName(String name, String description, String json, String template, String sqlStr, String sqlPart) {
         this.name = name;
         this.description = description;
         this.json = json;

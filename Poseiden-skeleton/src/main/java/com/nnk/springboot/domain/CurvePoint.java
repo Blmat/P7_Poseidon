@@ -1,21 +1,19 @@
-package com.poseidon.app.domain;
+package com.nnk.springboot.domain;
 
+import lombok.*;
+import org.hibernate.Hibernate;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "curvepoint")
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 public class CurvePoint {
 
     public CurvePoint(Integer curveId, Double term, Double value) {
@@ -33,15 +31,25 @@ public class CurvePoint {
     private Integer curveId;
 
     @Column
-    private Timestamp asOfDate;
+    Timestamp asOfDate;
+    @Column
+    Double term;
+    @Column
+    Double value;
 
     @Column
-    private Double term;
+    Timestamp creationDate;
 
-    @Column
-    private Double value;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        CurvePoint that = (CurvePoint) o;
+        return id != null && Objects.equals(id, that.id);
+    }
 
-    @Column
-    private Timestamp creationDate;
-
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

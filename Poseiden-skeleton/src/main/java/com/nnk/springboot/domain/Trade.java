@@ -1,23 +1,22 @@
-package com.poseidon.app.domain;
+package com.nnk.springboot.domain;
 
+import lombok.*;
+import org.hibernate.Hibernate;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "trade")
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 public class Trade {
 
+    //Constructeur demandé dans le test
     public Trade(String account, String type, Double buyQuantity) {
         this.account = account;
         this.type = type;
@@ -88,5 +87,18 @@ public class Trade {
 
     @Column
     private String side;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Trade trade = (Trade) o;
+        return id != null && Objects.equals(id, trade.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
 }
